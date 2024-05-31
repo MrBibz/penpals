@@ -45,4 +45,9 @@ public class PenpalService {
         Objects.requireNonNull(writeoff);
         return writeoffRepository.save(writeoff);
     }
+
+    public Penpal updateAccount(Penpal updatedPenpal) {
+        Objects.requireNonNull(updatedPenpal);
+        return penpalRepository.save(updatedPenpal);
+    }
 }

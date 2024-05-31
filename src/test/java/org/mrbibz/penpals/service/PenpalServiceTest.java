@@ -43,9 +43,23 @@ public class PenpalServiceTest {
         penpalService.createPenpal(penpal1);
     }
 
+    /*
+        ** ACCOUNT MANAGEMENT TESTS  START**
+     */
     @Test
     public void createPenpalTest() {
         verify(penpalRepository, times(1)).save(penpal1);
+    }
+
+    @Test
+    public void updateAccount() {
+        Penpal updatedPenpal = new Penpal();
+
+        when(penpalRepository.save(any(Penpal.class))).thenReturn(updatedPenpal);
+
+        penpalService.updateAccount(updatedPenpal);
+
+        verify(penpalRepository, times(1)).save(updatedPenpal);
     }
 
     @Test
