@@ -1,13 +1,13 @@
-package org.mrbibz.penpals;
+package org.mrbibz.authors;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class PenpalsApplication {
+public class AuthorsApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(PenpalsApplication.class, args);
+		SpringApplication.run(AuthorsApplication.class, args);
 	}
 
 }

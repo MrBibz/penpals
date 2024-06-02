@@ -1,10 +1,10 @@
-package org.mrbibz.penpals;
+package org.mrbibz.authors;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class PenpalsApplicationTests {
+class AuthorsApplicationTests {
 
 	@Test
 	void contextLoads() {
