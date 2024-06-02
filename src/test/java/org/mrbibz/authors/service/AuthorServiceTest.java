@@ -105,6 +105,9 @@ public class AuthorServiceTest {
         ** QUERY MANAGEMENT TESTS  END**
      */
 
+    /*
+        ** POST MANAGEMENT TESTS  START**
+     */
     @Test
     public void createPostTest() {
         Post post = new Post();
@@ -126,6 +129,23 @@ public class AuthorServiceTest {
 
         verify(postRepository, times(1)).save(any(Post.class));
     }
+
+    @Test
+    public void deletePostTest() {
+        Post post = new Post();
+        post.setId("postId");
+
+        when(postRepository.save(any(Post.class))).thenReturn(post);
+
+        authorService.createPost(post);
+        authorService.deletePost(post.getId());
+
+        verify(postRepository, times(1)).save(post);
+        verify(postRepository, times(1)).deleteById(post.getId());
+    }
+    /*
+        ** POST MANAGEMENT TESTS  END**
+     */
 
     @Test
     public void createQuestTest() {

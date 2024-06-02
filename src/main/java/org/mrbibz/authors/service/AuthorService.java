@@ -1,7 +1,6 @@
 package org.mrbibz.authors.service;
 
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import org.mrbibz.authors.model.*;
 import org.mrbibz.authors.repository.*;
 import org.springframework.stereotype.Service;
@@ -55,7 +54,15 @@ public class AuthorService {
 
     public Query unsendQuery(String queryId) {
         Objects.requireNonNull(queryId);
+        Query query = queryRepository.findById(queryId).orElse(null);
         queryRepository.deleteById(queryId);
-        return queryRepository.findById(queryId).orElse(null);
+        return query;
+    }
+
+    public Post deletePost(String postId) {
+        Objects.requireNonNull(postId);
+        Post post = postRepository.findById(postId).orElse(null);
+        postRepository.deleteById(postId);
+        return post;
     }
 }
