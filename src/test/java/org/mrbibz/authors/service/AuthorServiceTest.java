@@ -21,13 +21,7 @@ public class AuthorServiceTest {
     private RelationshipRepository relationshipRepository;
 
     @Mock
-    private PostRepository postRepository;
-
-    @Mock
     private QuestRepository questRepository;
-
-    @Mock
-    private QueryRepository queryRepository;
 
     @InjectMocks
     private AuthorService authorService;
@@ -74,79 +68,10 @@ public class AuthorServiceTest {
         ** ACCOUNT MANAGEMENT TESTS  END**
      */
 
-    /*
-        ** QUERY MANAGEMENT TESTS  START**
-     */
-    @Test
-    public void sendQueryTest() {
-        Query query = new Query();
-
-        when(queryRepository.save(any(Query.class))).thenReturn(any(Query.class));
-
-        authorService.sendQuery(query);
-
-        verify(queryRepository, times(1)).save(any(Query.class));
-    }
-
-    @Test
-    public void unsendQueryTest() {
-        Query query = new Query();
-        query.setId("queryId");
-
-        when(queryRepository.save(any(Query.class))).thenReturn(query);
-
-        authorService.sendQuery(query);
-        authorService.unsendQuery(query.getId());
-
-        verify(queryRepository, times(1)).save(query);
-        verify(queryRepository, times(1)).deleteById(query.getId());
-    }
-    /*
-        ** QUERY MANAGEMENT TESTS  END**
-     */
 
     /*
-        ** POST MANAGEMENT TESTS  START**
+        ** QUEST MANAGEMENT TESTS  START**
      */
-    @Test
-    public void createPostTest() {
-        Post post = new Post();
-
-        when(postRepository.save(any(Post.class))).thenReturn(any(Post.class));
-
-        authorService.createPost(post);
-
-        verify(postRepository, times(1)).save(any(Post.class));
-    }
-
-    @Test
-    public void updatePostTest() {
-        Post post = new Post();
-
-        when(postRepository.save(any(Post.class))).thenReturn(any(Post.class));
-
-        authorService.createPost(post);
-
-        verify(postRepository, times(1)).save(any(Post.class));
-    }
-
-    @Test
-    public void deletePostTest() {
-        Post post = new Post();
-        post.setId("postId");
-
-        when(postRepository.save(any(Post.class))).thenReturn(post);
-
-        authorService.createPost(post);
-        authorService.deletePost(post.getId());
-
-        verify(postRepository, times(1)).save(post);
-        verify(postRepository, times(1)).deleteById(post.getId());
-    }
-    /*
-        ** POST MANAGEMENT TESTS  END**
-     */
-
     @Test
     public void createQuestTest() {
         Quest quest = new Quest();
@@ -157,4 +82,14 @@ public class AuthorServiceTest {
 
         verify(questRepository, times(1)).save(any(Quest.class));
     }
+
+    @Test
+    public void updateQuestTest() {
+        Quest quest = new Quest();
+
+        when(questRepository.save(any(Quest.class))).thenReturn(any(Quest.class));
+    }
+    /*
+        ** QUEST MANAGEMENT TESTS  END**
+     */
 }
