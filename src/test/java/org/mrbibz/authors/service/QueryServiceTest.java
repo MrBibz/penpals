@@ -39,6 +39,13 @@ public class QueryServiceTest {
     }
 
     @Test
+    public void editQuery() {
+        queryService.editQuery(query.getId());
+
+        verify(queryRepository, times(2)).save(any(Query.class));
+    }
+
+    @Test
     public void unsendQueryTest() {
         query.setId("queryId");
 

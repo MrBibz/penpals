@@ -9,6 +9,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.mrbibz.authors.model.Post;
 import org.mrbibz.authors.repository.PostRepository;
 
+import java.util.Optional;
+
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -38,7 +40,7 @@ public class PostServiceTest {
     }
 
     @Test
-    public void updatePostTest() {
+    public void editPostTest() {
         postService.editPost(post);
 
         verify(postRepository, times(2)).save(any(Post.class));
@@ -48,9 +50,10 @@ public class PostServiceTest {
     public void deletePostTest() {
         post.setId("postId");
 
+        when(postRepository.findById(post.getId())).thenReturn(Optional.of(post));
+
         postService.deletePost(post.getId());
 
-        verify(postRepository, times(1)).save(post);
         verify(postRepository, times(1)).deleteById(post.getId());
     }
 }

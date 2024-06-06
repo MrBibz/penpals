@@ -20,9 +20,6 @@ public class AuthorServiceTest {
     @Mock
     private RelationshipRepository relationshipRepository;
 
-    @Mock
-    private QuestRepository questRepository;
-
     @InjectMocks
     private AuthorService authorService;
 
@@ -31,12 +28,12 @@ public class AuthorServiceTest {
     @BeforeEach
     public void setUp() {
         author1 = new Author();
+
+        when(authorRepository.save(any(Author.class))).thenReturn(any(Author.class));
+
         authorService.createAuthor(author1);
     }
 
-    /*
-        ** ACCOUNT MANAGEMENT TESTS  START**
-     */
     @Test
     public void createAuthorTest() {
         verify(authorRepository, times(1)).save(author1);
@@ -54,42 +51,28 @@ public class AuthorServiceTest {
     }
 
     @Test
-    public void addAuthorTest() {
+    public void addFriendTest() {
         Author author2 = new Author();
 
         when(relationshipRepository.save(any(Relationship.class))).thenReturn(any(Relationship.class));
 
-        authorService.addAuthor(author1, author2);
+        authorService.addFriend(author1, author2);
 
         verify(authorRepository, times(1)).save(any(Author.class));
         verify(relationshipRepository, times(1)).save(any(Relationship.class));
     }
-    /*
-        ** ACCOUNT MANAGEMENT TESTS  END**
-     */
-
-
-    /*
-        ** QUEST MANAGEMENT TESTS  START**
-     */
-    @Test
-    public void createQuestTest() {
-        Quest quest = new Quest();
-
-        when(questRepository.save(any(Quest.class))).thenReturn(any(Quest.class));
-
-        authorService.createQuest(quest);
-
-        verify(questRepository, times(1)).save(any(Quest.class));
-    }
 
     @Test
-    public void updateQuestTest() {
-        Quest quest = new Quest();
+    public void removeFriendTest() {
+        Author author2 = new Author();
+        Relationship relationship = new Relationship(author1, author2);
 
-        when(questRepository.save(any(Quest.class))).thenReturn(any(Quest.class));
+        when(relationshipRepository.save(any(Relationship.class))).thenReturn(relationship);
+        when(relationshipRepository.findByFriends(any(Author.class), any(Author.class))).thenReturn(relationship);
+
+        authorService.addFriend(author1, author2);
+        authorService.removeFriend(author1, author2);
+
+        verify(relationshipRepository, times(1)).delete(relationship);
     }
-    /*
-        ** QUEST MANAGEMENT TESTS  END**
-     */
 }

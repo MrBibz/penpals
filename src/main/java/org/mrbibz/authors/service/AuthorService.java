@@ -6,6 +6,7 @@ import org.mrbibz.authors.repository.*;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -15,26 +16,30 @@ public class AuthorService {
 
     private final RelationshipRepository relationshipRepository;
 
-    private final QuestRepository questRepository;
-
     public Author createAuthor(Author author) {
-        Objects.requireNonNull(author);
+        Objects.requireNonNull(author, "Author cannot be null");
         return authorRepository.save(author);
     }
 
-    public Relationship addAuthor(Author requestSender, Author requestReceiver) {
-        Objects.requireNonNull(requestSender);
-        Objects.requireNonNull(requestReceiver);
+    public Relationship addFriend(Author requestSender, Author requestReceiver) {
+        Objects.requireNonNull(requestSender, "Request sender cannot be null");
+        Objects.requireNonNull(requestReceiver, "Request receiver cannot be null");
         return relationshipRepository.save(new Relationship(requestSender, requestReceiver));
     }
 
-    public Quest createQuest(Quest quest) {
-        Objects.requireNonNull(quest);
-        return questRepository.save(quest);
+    public Author updateAccount(Author updatedAuthor) {
+        Objects.requireNonNull(updatedAuthor, "Updated author cannot be null");
+        return authorRepository.save(updatedAuthor);
     }
 
-    public Author updateAccount(Author updatedAuthor) {
-        Objects.requireNonNull(updatedAuthor);
-        return authorRepository.save(updatedAuthor);
+    public Optional<Relationship> removeFriend(Author friendRemover, Author friend) {
+        Objects.requireNonNull(friendRemover, "Friend remover cannot be null");
+        Objects.requireNonNull(friend, "Friend cannot be null");
+        Relationship relationship = relationshipRepository.findByFriends(friendRemover, friend);
+        if (relationship != null) {
+            relationshipRepository.delete(relationship);
+            return Optional.of(relationship);
+        }
+        return Optional.empty();
     }
 }
