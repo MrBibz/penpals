@@ -40,7 +40,10 @@ public class QueryServiceTest {
 
     @Test
     public void editQuery() {
-        queryService.editQuery(query.getId());
+        Query updatedQuery = new Query();
+
+        when(queryRepository.save(any(Query.class))).thenReturn(updatedQuery);
+        queryService.editQuery(query.getId(), updatedQuery);
 
         verify(queryRepository, times(2)).save(any(Query.class));
     }
